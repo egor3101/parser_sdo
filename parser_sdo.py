@@ -7,7 +7,7 @@ option.headless = True
 browser = webdriver.Firefox(options=option)
 
 
-def actions_on_site(browser):
+def actions_on_site():
     browser.get("https://sdo.rgsu.net/")
     sign_in_button = browser.find_element_by_xpath("/html/body/div[1]/div[1]/span/div/div/a").click()
     sleep(2)
@@ -27,7 +27,7 @@ def actions_on_site(browser):
         print(x.text)
 
 
-def output(browser):
+def output():
     status = browser.find_elements_by_class_name("lesson-status-tab")
     file = open("data.txt", "w")
     for x in status:
@@ -35,5 +35,10 @@ def output(browser):
     file.close()
 
 
-actions_on_site(browser)
-output(browser)
+def main():
+    actions_on_site()
+    output()
+
+
+if __name__ == '__main__':
+    main()
