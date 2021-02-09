@@ -1,6 +1,7 @@
 from selenium import webdriver
 from time import sleep
 from selenium.webdriver.common.by import By
+import filecmp
 
 option = webdriver.FirefoxOptions()
 option.headless = True
@@ -22,22 +23,40 @@ def actions_on_site():
     sleep(2.5)
     browser.find_element_by_xpath("/html/body/div[1]/div[2]/div[1]/div/ul/li[2]/a/span").click()
     sleep(2.5)
-    objects_name = browser.find_elements(By.ID, "lesson_title")
-    for x in objects_name:
-        print(x.text)
+    # objects_name = browser.find_elements(By.ID, "lesson_title")
+    # for x in objects_name:
+    #    print(x.text)
 
 
 def output():
     status = browser.find_elements_by_class_name("lesson-status-tab")
-    file = open("data.txt", "w")
+    file = open("new_data.txt", "w")
     for x in status:
         file.write(x.get_attribute("innerHTML") + '\n')
     file.close()
+    return status
+
+
+def check_data(status):
+    f = open("new_data.txt", 'r')
+    contentA = f.read()
+    f.close()
+    f = open("old_data.txt", 'r')
+    contentB = f.read()
+    f.close()
+
+    if contentA == contentB:
+        print("Yes")
+    else:
+        file = open("old_data.txt", "w")
+        for x in status:
+            file.write(x.get_attribute("innerHTML") + '\n')
 
 
 def main():
     actions_on_site()
     output()
+    check_data(output())
 
 
 if __name__ == '__main__':
