@@ -1,7 +1,6 @@
 from selenium import webdriver
 from time import sleep
-from selenium.webdriver.common.by import By
-import filecmp
+
 
 option = webdriver.FirefoxOptions()
 option.headless = True
@@ -51,6 +50,7 @@ def check_data(status):
         file = open("old_data.txt", "w")
         for x in status:
             file.write(x.get_attribute("innerHTML") + '\n')
+        file.close()
 
 
 def main():
